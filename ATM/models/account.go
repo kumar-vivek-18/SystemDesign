@@ -1,6 +1,9 @@
-package atm
+package models
 
-import "sync"
+import (
+	"ATM/exceptions"
+	"sync"
+)
 
 type Account struct {
 	AccoutNumber string
@@ -36,7 +39,7 @@ func (a *Account) Debit(amount float64) error {
 	a.mu.Lock()
 	defer a.mu.Unlock()
 	if a.Balance < amount {
-		return nil
+		return exceptions.ErrInsufficientBalance
 	}
 	a.Balance -= amount
 	return nil
