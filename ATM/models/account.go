@@ -7,13 +7,15 @@ import (
 
 type Account struct {
 	AccoutNumber string
+	CustomerName string
 	Balance      float64
 	mu           sync.Mutex
 }
 
-func NewAccount(accountNumber string, balance float64) *Account {
+func NewAccount(accountNumber, customerName string, balance float64) *Account {
 	return &Account{
 		AccoutNumber: accountNumber,
+		CustomerName: customerName,
 		Balance:      balance,
 	}
 }
@@ -26,6 +28,10 @@ func (a *Account) GetAccountBalance() float64 {
 	a.mu.Lock()
 	defer a.mu.Unlock()
 	return a.Balance
+}
+
+func (a *Account) GetCustomerName() string {
+	return a.CustomerName
 }
 
 func (a *Account) Credit(amount float64) error {
